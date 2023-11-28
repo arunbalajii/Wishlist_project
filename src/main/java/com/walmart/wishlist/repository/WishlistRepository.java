@@ -1,15 +1,15 @@
 package com.walmart.wishlist.repository;
 
-import com.walmart.wishlist.model.Cart;
+import com.walmart.wishlist.model.Wishlist;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CartRepository extends  MongoRepository<Cart, ObjectId> {
+public interface WishlistRepository extends  MongoRepository<Wishlist, ObjectId> {
 
-	Cart findCartByUserId(Integer userId);
+	Wishlist findCartByUserId(Integer userId);
 
 	@Aggregation(pipeline = { "{$group: { _id: '', total: {$max: $cartId }}}" })
 	public Integer max();

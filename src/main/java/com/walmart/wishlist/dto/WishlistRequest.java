@@ -5,13 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartRequest extends BaseRequest {
+public class WishlistRequest extends BaseRequest {
 
     private Integer userId;
 

@@ -2,7 +2,7 @@ package com.walmart.wishlist.dto;
 
 import java.util.List;
 
-public class CartResponse {
+public class WishlistResponse {
 	
 	private Integer cartId;
 	private Integer userId;

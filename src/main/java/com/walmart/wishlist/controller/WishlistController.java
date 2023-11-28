@@ -1,12 +1,11 @@
 package com.walmart.wishlist.controller;
 
 
-import com.walmart.wishlist.model.Cart;
 import com.walmart.wishlist.model.Products;
-import com.walmart.wishlist.dto.CartRequest;
-import com.walmart.wishlist.dto.CartResponse;
-import com.walmart.wishlist.dto.MessageRepsonse;
+import com.walmart.wishlist.dto.WishlistRequest;
+import com.walmart.wishlist.dto.WishlistResponse;
 import com.walmart.wishlist.dto.ProductResponse;
+import com.walmart.wishlist.model.Wishlist;
 import com.walmart.wishlist.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,12 +21,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/wishlist")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class CartController {
+public class WishlistController {
 
-	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
+	private static final Logger logger = LoggerFactory.getLogger(WishlistController.class);
 
 	@Autowired
-	private CartService cartService;
+	private WishlistService wishlistService;
 
 
 	@Autowired
@@ -35,17 +34,17 @@ public class CartController {
 
 
 	@Autowired
-	public CartController(CartService cartService)
-	{ this.cartService=cartService;
+	public WishlistController(WishlistService wishlistService)
+	{ this.wishlistService = wishlistService;
 
 	}
 
 	@GetMapping(value = "/fetch/user/{id}")
 	private ResponseEntity getCartByCustomerId(@PathVariable(value = "id")int userId) {
 		try {
-			Cart cart = cartService.findCartByUserId(userId );
-			CartResponse cartResponse=buildFetchCartResponse(cart);
-			return new ResponseEntity<>(cartResponse, HttpStatus.OK);
+			Wishlist wishlist = wishlistService.findCartByUserId(userId );
+			WishlistResponse wishlistResponse =buildFetchCartResponse(wishlist);
+			return new ResponseEntity<>(wishlistResponse, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println("Find Cart by Customer id method error {}" + e.getMessage());
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -54,16 +53,16 @@ public class CartController {
 
 
 	@PostMapping(value = "/add")
-	private ResponseEntity addToCart(@RequestBody CartRequest cartRequest) {
+	private ResponseEntity addToCart(@RequestBody WishlistRequest wishlistRequest) {
 		try {
 
 			System.out.println(" Inside addToCart");
-			logger.info("Inside addToCart for User Id :"+cartRequest.getUserId());
-			Cart cart = cartService.saveOrUpdate(cartRequest);
-			System.out.println(" Response came "+cart.getUserId());
-			CartResponse cartResponse=buildFetchCartResponse(cart);
+			logger.info("Inside addToCart for User Id :"+ wishlistRequest.getUserId());
+			Wishlist wishlist = wishlistService.saveOrUpdate(wishlistRequest);
+			System.out.println(" Response came "+wishlist.getUserId());
+			WishlistResponse wishlistResponse =buildFetchCartResponse(wishlist);
 
-			return new ResponseEntity<>(cartResponse, HttpStatus.CREATED);
+			return new ResponseEntity<>(wishlistResponse, HttpStatus.CREATED);
 		} catch (Exception e) {
 			System.out.println("Exception :: Create Cart method error {}"+ e.getMessage());
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -72,14 +71,14 @@ public class CartController {
 
 
 
-	public CartResponse buildFetchCartResponse(Cart cart) {
+	public WishlistResponse buildFetchCartResponse(Wishlist wishlist) {
 
-		CartResponse cartResponse = new CartResponse();
-		cartResponse.setCartId(cart.getCartId());
-		cartResponse.setUserId(cart.getUserId());
+		WishlistResponse wishlistResponse = new WishlistResponse();
+		wishlistResponse.setCartId(wishlist.getCartId());
+		wishlistResponse.setUserId(wishlist.getUserId());
 //		cartResponse.setAmount(cart.getAmount());
 		List<ProductResponse> responseProd = new ArrayList<ProductResponse>();
-		List<Products> responseProdlist = cart.getProducts();
+		List<Products> responseProdlist = wishlist.getProducts();
 		for (Products prod : responseProdlist) {
 			ProductResponse p = new ProductResponse();
 			p.setId(prod.getId());
@@ -87,9 +86,9 @@ public class CartController {
 			responseProd.add(p);
 
 		}
-		cartResponse.setProducts(responseProd);
+		wishlistResponse.setProducts(responseProd);
 
-		return cartResponse;
+		return wishlistResponse;
 
 
 	}

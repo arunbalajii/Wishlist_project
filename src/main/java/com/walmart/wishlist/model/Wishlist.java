@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document("wishlist")
-public class Cart {
+public class Wishlist {
 
 	@Id
 	private ObjectId _id;

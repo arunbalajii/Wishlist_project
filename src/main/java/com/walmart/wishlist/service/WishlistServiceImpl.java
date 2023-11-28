@@ -1,11 +1,11 @@
 package com.walmart.wishlist.service;
 
-import com.walmart.wishlist.controller.CartController;
+import com.walmart.wishlist.controller.WishlistController;
 import com.walmart.wishlist.dto.CartRequestToCart;
-import com.walmart.wishlist.dto.CartRequest;
-import com.walmart.wishlist.model.Cart;
+import com.walmart.wishlist.dto.WishlistRequest;
+import com.walmart.wishlist.model.Wishlist;
 import com.walmart.wishlist.model.Products;
-import com.walmart.wishlist.repository.CartRepository;
+import com.walmart.wishlist.repository.WishlistRepository;
 import com.walmart.wishlist.repository.ProductRepository;
 import com.walmart.wishlist.utility.ProductException;
 import lombok.RequiredArgsConstructor;
@@ -23,20 +23,20 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CartServiceImpl extends Exception   implements CartService {
+public class WishlistServiceImpl extends Exception   implements WishlistService {
 
-	private CartRepository cartRepository;
+	private WishlistRepository wishlistRepository;
 	private CartRequestToCart cartRequestToCart;
 	private ProductRepository productRepository;
 
-	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
+	private static final Logger logger = LoggerFactory.getLogger(WishlistController.class);
 
 	@Autowired	
 	private MessageService messageService;
 
 	@Autowired
-	public CartServiceImpl(CartRepository cartRepository, CartRequestToCart cartRequestToCart,ProductRepository productRepository) {
-		this.cartRepository = cartRepository;
+	public WishlistServiceImpl(WishlistRepository wishlistRepository, CartRequestToCart cartRequestToCart, ProductRepository productRepository) {
+		this.wishlistRepository = wishlistRepository;
 		this.cartRequestToCart = cartRequestToCart;
 		this.productRepository=productRepository;
 
@@ -44,19 +44,19 @@ public class CartServiceImpl extends Exception   implements CartService {
 
 
 	@Override
-	public Cart saveOrUpdate(CartRequest cartRequest) throws Exception {
+	public Wishlist saveOrUpdate(WishlistRequest wishlistRequest) throws Exception {
 
-		Cart c = null;
+		Wishlist c = null;
 		boolean isItemPresent =false;
 		try {
-			c =cartRepository.findCartByUserId(cartRequest.getUserId());
+			c = wishlistRepository.findCartByUserId(wishlistRequest.getUserId());
 		}catch(Exception e) {
 			logger.error("Exception occered inside  cart saveOrUpdate process "+e);
 		}
 
 		if(c!=null && c.get_id()!=null) { // Update Cart 
 			List<Products> dbProductList = c.getProducts();
-			List<Products> reqProdList = cartRequest.getProducts();
+			List<Products> reqProdList = wishlistRequest.getProducts();
 
 			for (Products reqProduct : reqProdList)
 			{
@@ -84,34 +84,34 @@ public class CartServiceImpl extends Exception   implements CartService {
 			}
 			c.setProduct(dbProductList);
 
-			return cartRepository.save(c);
+			return wishlistRepository.save(c);
 		}else { // Create Cart
-			if(cartRepository.max()!=null) {
-				cartRequest.setId(cartRepository.max()+1); // fetch the max count and insert into cart
+			if(wishlistRepository.max()!=null) {
+				wishlistRequest.setId(wishlistRepository.max()+1); // fetch the max count and insert into cart
 				Date d =getDate();
 //				cartRequest.setDate(d);
 			}
 			else
-				cartRequest.setId(1);
+				wishlistRequest.setId(1);
 
-			return cartRepository.save(cartRequestToCart.convert(cartRequest));
+			return wishlistRepository.save(cartRequestToCart.convert(wishlistRequest));
 		}
 
 	}
 
 	@Override
-	public Cart findCartByUserId(int  userID) throws ProductException {
+	public Wishlist findCartByUserId(int  userID) throws ProductException {
 		logger.info("Inside findCartByUserId");
-		if(cartRepository.findCartByUserId(userID)==null)
+		if(wishlistRepository.findCartByUserId(userID)==null)
 			throw new ProductException("User Details not available in cart table ");
 		else
-			return cartRepository.findCartByUserId(userID);
+			return wishlistRepository.findCartByUserId(userID);
 
 	}
 
 	@Override
-	public List<Cart> findAllCarts() {
-		return cartRepository.findAll();
+	public List<Wishlist> findAllCarts() {
+		return wishlistRepository.findAll();
 	}
 
 
@@ -133,15 +133,15 @@ public class CartServiceImpl extends Exception   implements CartService {
 //	}
 
 	@Override
-	public Cart removeProductFromCart(Cart cart,Integer prodId) {
-		List<Products> listProduct=cart.getProducts();
+	public Wishlist removeProductFromCart(Wishlist wishlist, Integer prodId) {
+		List<Products> listProduct= wishlist.getProducts();
 		for(Products p:listProduct) {
 			if(p.getId() == prodId) {
 				listProduct.remove(p);
 			}
-			cart.setProduct(listProduct);
+			wishlist.setProduct(listProduct);
 		}
-		return cartRepository.save(cart);
+		return wishlistRepository.save(wishlist);
 	}
 
 	public Date getDate() {

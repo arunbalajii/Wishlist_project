@@ -1,29 +1,29 @@
 package com.walmart.wishlist.dto;
 
-import com.walmart.wishlist.model.Cart;
+import com.walmart.wishlist.model.Wishlist;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 @Component
-public class CartRequestToCart implements Converter<CartRequest, Cart> {
+public class CartRequestToCart implements Converter<WishlistRequest, Wishlist> {
 
 	
 	@Override
-	public Cart convert(CartRequest cartRequest) {
-		Cart cart = new Cart();
+	public Wishlist convert(WishlistRequest wishlistRequest) {
+		Wishlist wishlist = new Wishlist();
 
-		if (!StringUtils.isEmpty(cartRequest.getUserId())) {
+		if (!StringUtils.isEmpty(wishlistRequest.getUserId())) {
 
-			cart.setCartId(cartRequest.getId());
-			cart.setUserId(cartRequest.getUserId());
+			wishlist.setCartId(wishlistRequest.getId());
+			wishlist.setUserId(wishlistRequest.getUserId());
 //			cart.setPromoCode(cartRequest.getPromoCode());
 //			cart.setDate(cartRequest.getDate());
 //			cart.setAmount(cartRequest.getAmount());
-			cart.setProduct(cartRequest.getProducts());
+			wishlist.setProduct(wishlistRequest.getProducts());
 		}
 
-		return cart;
+		return wishlist;
 	}
 
 	
