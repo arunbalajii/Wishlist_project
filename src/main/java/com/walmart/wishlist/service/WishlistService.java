@@ -10,7 +10,7 @@ import java.util.List;
 public interface WishlistService {
 	Wishlist saveOrUpdate(WishlistRequest wishlistRequest) throws Exception;
 
-    Wishlist findCartByUserId(int userid) throws ProductException;
+    Wishlist findCartByUserId(String userid) throws ProductException;
 
 //    Cart findCartByUserId(String email) throws ProductException;
     List<Wishlist> findAllCarts();

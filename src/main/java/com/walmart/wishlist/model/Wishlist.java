@@ -21,7 +21,7 @@ public class Wishlist {
 	private ObjectId _id;
 	private Integer cartId;
 	private String email;
-	private @NonNull Integer userId;
+	private @NonNull String userId;
 	private Date date;
 	private String promoCode;
 	private Double amount;
@@ -37,13 +37,22 @@ public class Wishlist {
 		this.cartId = cartId;
 	}
 
-	public Integer getUserId() {
+//	public Integer getUserId() {
+//		return userId;
+//	}
+
+
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+
+//	public void setUserId(String userId) {
+//		this.userId = userId;
+//	}
 
 	public Date getDate() {
 		return date;

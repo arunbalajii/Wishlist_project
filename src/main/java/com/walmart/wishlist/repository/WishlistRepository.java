@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WishlistRepository extends  MongoRepository<Wishlist, ObjectId> {
 
-	Wishlist findCartByUserId(Integer userId);
+	Wishlist findCartByUserId(String userId);
 
 	@Aggregation(pipeline = { "{$group: { _id: '', total: {$max: $cartId }}}" })
 	public Integer max();

@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class WishlistRequest extends BaseRequest {
 
-    private Integer userId;
+    private String email;
 
     private List<Products> products;
 //	private Date date;
@@ -20,19 +20,26 @@ public class WishlistRequest extends BaseRequest {
 //	private Double amount;
 
 
-
-	public Integer getUserId() {
-		return this.userId;
+	public String getEmail() {
+		return email;
 	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	//	public Integer getUserId() {
+//		return this.userId;
+//	}
 	public List<Products> getProducts() {
 		return products;
 	}
 	public void setProduct(List<Products> products) {
 		this.products = products;
 	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+//	public void setUserId(Integer userId) {
+//		this.userId = userId;
+//	}
 //	public Date getDate() {
 //		return date;
 //	}

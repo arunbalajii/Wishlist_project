@@ -13,10 +13,10 @@ public class CartRequestToCart implements Converter<WishlistRequest, Wishlist> {
 	public Wishlist convert(WishlistRequest wishlistRequest) {
 		Wishlist wishlist = new Wishlist();
 
-		if (!StringUtils.isEmpty(wishlistRequest.getUserId())) {
+		if (!StringUtils.isEmpty(wishlistRequest.getEmail())) {
 
 			wishlist.setCartId(wishlistRequest.getId());
-			wishlist.setUserId(wishlistRequest.getUserId());
+			wishlist.setUserId(wishlistRequest.getEmail());
 //			cart.setPromoCode(cartRequest.getPromoCode());
 //			cart.setDate(cartRequest.getDate());
 //			cart.setAmount(cartRequest.getAmount());
