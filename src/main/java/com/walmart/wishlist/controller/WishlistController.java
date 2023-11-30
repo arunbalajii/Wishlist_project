@@ -46,9 +46,10 @@ public class WishlistController {
 		try {
 			Wishlist wishlist = wishlistService.findByEmail(wishlistFetchRequest.getEmail());
 			WishlistResponse wishlistResponse =buildFetchCartResponse(wishlist);
+			logger.info("Fetching Wishlist !");
 			return new ResponseEntity<>(wishlistResponse, HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.println("Find Cart by Customer id method error {}" + e.getMessage());
+			logger.error("Data Fetch: "+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -58,14 +59,13 @@ public class WishlistController {
 	private ResponseEntity addToCart(@RequestBody WishlistRequest wishlistRequest) {
 		try {
 
-			System.out.println(" Inside add");
-			logger.info("Inside add for email Id :"+ wishlistRequest.getEmail());
+			logger.info("Adding Item to Wishlist");
 			Wishlist wishlist = wishlistService.saveOrUpdate(wishlistRequest);
 			WishlistResponse wishlistResponse =buildFetchCartResponse(wishlist);
 
 			return new ResponseEntity<>(wishlistResponse, HttpStatus.CREATED);
 		} catch (Exception e) {
-			System.out.println("Exception :: Create Cart method error {}"+ e.getMessage());
+			logger.error("Add: "+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

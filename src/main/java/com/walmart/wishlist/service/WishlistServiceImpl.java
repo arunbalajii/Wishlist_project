@@ -48,7 +48,7 @@ public class WishlistServiceImpl extends Exception   implements WishlistService 
 		try {
 			c = wishlistRepository.findByEmail(wishlistRequest.getEmail());
 		}catch(Exception e) {
-			logger.error("Exception inside  cart saveOrUpdate process "+e);
+			logger.error("SaveOrUpdate: "+e);
 		}
 
 		if(c!=null && c.get_id()!=null) { // Update Cart 
@@ -93,7 +93,7 @@ public class WishlistServiceImpl extends Exception   implements WishlistService 
 	@Override
 
 		public Wishlist findByEmail(String  email) throws ProductException {
-		logger.info("Inside findCartByUserId");
+		logger.info("Inside findByEmail");
 
 		if(wishlistRepository.findByEmail(email)==null)
 			throw new ProductException("User Details not available in cart table ");
