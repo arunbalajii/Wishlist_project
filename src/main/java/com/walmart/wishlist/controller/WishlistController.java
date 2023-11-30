@@ -70,8 +70,6 @@ public class WishlistController {
 		}
 	}
 
-
-
 	public WishlistResponse buildFetchCartResponse(Wishlist wishlist) {
 
 		WishlistResponse wishlistResponse = new WishlistResponse();
