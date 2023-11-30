@@ -54,7 +54,6 @@ public class WishlistController {
 		}
 	}
 
-
 	@PostMapping(value = "/add")
 	private ResponseEntity addToCart(@RequestBody WishlistRequest wishlistRequest) {
 		try {
