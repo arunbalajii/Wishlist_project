@@ -14,9 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 
@@ -31,7 +28,7 @@ public class WishlistServiceImpl extends Exception   implements WishlistService 
 
 	private static final Logger logger = LoggerFactory.getLogger(WishlistController.class);
 
-	@Autowired	
+	@Autowired
 	private MessageService messageService;
 
 	@Autowired
@@ -49,9 +46,9 @@ public class WishlistServiceImpl extends Exception   implements WishlistService 
 		Wishlist c = null;
 		boolean isItemPresent =false;
 		try {
-			c = wishlistRepository.findCartByUserId(wishlistRequest.getEmail());
+			c = wishlistRepository.findByEmail(wishlistRequest.getEmail());
 		}catch(Exception e) {
-			logger.error("Exception occered inside  cart saveOrUpdate process "+e);
+			logger.error("Exception inside  cart saveOrUpdate process "+e);
 		}
 
 		if(c!=null && c.get_id()!=null) { // Update Cart 
@@ -62,18 +59,14 @@ public class WishlistServiceImpl extends Exception   implements WishlistService 
 			{
 				for (Products dbProduct : dbProductList)
 				{
-//					boolean  isItemAvailable =isProductAvailable(reqProduct);
 
-//					if( isItemAvailable) {
-//						if (dbProduct.getId().equals(reqProduct.getId()))
-//						{
-//							dbProduct.setQuantity(reqProduct.getQuantity());
-//							isItemPresent=true;
-//							break;
-//						}
-//					}else {
-//						throw new ProductException("Product or Quantity is not available ");
-//					}
+						if (dbProduct.getId().equals(reqProduct.getId()))
+						{
+							dbProduct.setQuantity(reqProduct.getQuantity());
+							isItemPresent=true;
+							break;
+						}
+
 				}
 				if(!isItemPresent) {
 					Products p = new Products();
@@ -85,11 +78,9 @@ public class WishlistServiceImpl extends Exception   implements WishlistService 
 			c.setProduct(dbProductList);
 
 			return wishlistRepository.save(c);
-		}else { // Create Cart
+		}else { // Create wishlist
 			if(wishlistRepository.max()!=null) {
 				wishlistRequest.setId(wishlistRepository.max()+1); // fetch the max count and insert into cart
-				Date d =getDate();
-//				cartRequest.setDate(d);
 			}
 			else
 				wishlistRequest.setId(1);
@@ -100,56 +91,16 @@ public class WishlistServiceImpl extends Exception   implements WishlistService 
 	}
 
 	@Override
-	public Wishlist findCartByUserId(String  userID) throws ProductException {
+
+		public Wishlist findByEmail(String  email) throws ProductException {
 		logger.info("Inside findCartByUserId");
-		if(wishlistRepository.findCartByUserId(userID)==null)
+
+		if(wishlistRepository.findByEmail(email)==null)
 			throw new ProductException("User Details not available in cart table ");
 		else
-			return wishlistRepository.findCartByUserId(userID);
 
-	}
+			return wishlistRepository.findByEmail(email);
 
-	@Override
-	public List<Wishlist> findAllCarts() {
-		return wishlistRepository.findAll();
-	}
-
-
-//	public boolean isProductAvailable(Products reqProduct) {
-//		boolean productAvaliablity = false;
-//
-//		Products products = productRepository.findItemById(reqProduct.getId());
-//		if(products!=null && products.getId()!=null) {
-//
-//			if( products.getAvailableQty() >=reqProduct.getQuantity())
-//			{
-//
-//				productAvaliablity=true;
-//			}
-//		}
-//		logger.info("productAvaliablity : "+productAvaliablity);
-//
-//		return productAvaliablity;
-//	}
-
-	@Override
-	public Wishlist removeProductFromCart(Wishlist wishlist, Integer prodId) {
-		List<Products> listProduct= wishlist.getProducts();
-		for(Products p:listProduct) {
-			if(p.getId() == prodId) {
-				listProduct.remove(p);
-			}
-			wishlist.setProduct(listProduct);
-		}
-		return wishlistRepository.save(wishlist);
-	}
-
-	public Date getDate() {
-		LocalDate currentDate = LocalDate.now();
-
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy hh:mm:ss");
-		Date date = java.sql.Date.valueOf(currentDate);
-		return date;
 	}
 
 

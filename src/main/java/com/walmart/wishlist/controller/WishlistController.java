@@ -40,22 +40,11 @@ public class WishlistController {
 
 	}
 
-/*	@GetMapping(value = "/fetch/user/{id}")
-	private ResponseEntity getCartByCustomerId(@PathVariable(value = "id")String userId) {
-		try {
-			Wishlist wishlist = wishlistService.findCartByUserId(userId );
-			WishlistResponse wishlistResponse =buildFetchCartResponse(wishlist);
-			return new ResponseEntity<>(wishlistResponse, HttpStatus.OK);
-		} catch (Exception e) {
-			System.out.println("Find Cart by Customer id method error {}" + e.getMessage());
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}*/
 
 	@PostMapping(value = "/fetch/user")
 	private ResponseEntity getCartByCustomerId(@RequestBody WishlistFetchRequest wishlistFetchRequest) {
 		try {
-			Wishlist wishlist = wishlistService.findCartByUserId(wishlistFetchRequest.getEmail());
+			Wishlist wishlist = wishlistService.findByEmail(wishlistFetchRequest.getEmail());
 			WishlistResponse wishlistResponse =buildFetchCartResponse(wishlist);
 			return new ResponseEntity<>(wishlistResponse, HttpStatus.OK);
 		} catch (Exception e) {
@@ -69,10 +58,9 @@ public class WishlistController {
 	private ResponseEntity addToCart(@RequestBody WishlistRequest wishlistRequest) {
 		try {
 
-			System.out.println(" Inside addToCart");
-			logger.info("Inside addToCart for User Id :"+ wishlistRequest.getEmail());
+			System.out.println(" Inside add");
+			logger.info("Inside add for email Id :"+ wishlistRequest.getEmail());
 			Wishlist wishlist = wishlistService.saveOrUpdate(wishlistRequest);
-			System.out.println(" Response came "+wishlist.getUserId());
 			WishlistResponse wishlistResponse =buildFetchCartResponse(wishlist);
 
 			return new ResponseEntity<>(wishlistResponse, HttpStatus.CREATED);
@@ -88,8 +76,7 @@ public class WishlistController {
 
 		WishlistResponse wishlistResponse = new WishlistResponse();
 		wishlistResponse.setCartId(wishlist.getCartId());
-		wishlistResponse.setEmail(wishlist.getUserId());
-//		cartResponse.setAmount(cart.getAmount());
+		wishlistResponse.setEmail(wishlist.getEmail());
 		List<ProductResponse> responseProd = new ArrayList<ProductResponse>();
 		List<Products> responseProdlist = wishlist.getProducts();
 		for (Products prod : responseProdlist) {

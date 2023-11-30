@@ -19,16 +19,6 @@ public class Products {
 	private ObjectId _id;
 	private Integer id;
 	private Integer quantity;
-	private Integer availableQty;
-	private String inventoryStatus;
-	private Integer orderLimit;
-//	private boolean isElegibileForPromotion;
-//	private float discount;
-	private String iconUrl;
-	private String title;
-
-
-
 	public ObjectId get_id() {
 		return _id;
 	}
@@ -57,69 +47,6 @@ public class Products {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-
-
-	public Integer getAvailableQty() { return availableQty; }
-
-
-	public void setAvailableQty(Integer availableQty) { this.availableQty =
-			availableQty; }
-
-
-	public Integer getOrderLimit() { return orderLimit; }
-
-
-	public void setOrderLimit(Integer orderLimit) { this.orderLimit = orderLimit;
-	}
-
-
-	public String getInventoryStatus() { return inventoryStatus; }
-
-
-	public void setInventoryStatus(String inventoryStatus) { this.inventoryStatus
-		= inventoryStatus; }
-
-//	public boolean isElegibileForPromotion() {
-//		return isElegibileForPromotion;
-//	}
-//
-//
-//	public void setElegibileForPromotion(boolean isElegibileForPromotion) {
-//		this.isElegibileForPromotion = isElegibileForPromotion;
-//	}
-//
-//
-//	public float getDiscount() {
-//		return discount;
-//	}
-//
-//
-//	public void setDiscount(float discount) {
-//		this.discount = discount;
-//	}
-
-
-	public String getIconUrl() {
-		return iconUrl;
-	}
-
-
-	public void setIconUrl(String iconUrl) {
-		this.iconUrl = iconUrl;
-	}
-
-
-	public String getTitle() {
-		return title;
-	}
-
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-
-
 
 
 }

@@ -8,13 +8,8 @@ import java.util.List;
 
 
 public interface WishlistService {
-	Wishlist saveOrUpdate(WishlistRequest wishlistRequest) throws Exception;
+    Wishlist saveOrUpdate(WishlistRequest wishlistRequest) throws Exception;
 
-    Wishlist findCartByUserId(String userid) throws ProductException;
+    Wishlist findByEmail(String email) throws ProductException;
 
-//    Cart findCartByUserId(String email) throws ProductException;
-    List<Wishlist> findAllCarts();
-
-    Wishlist removeProductFromCart(Wishlist wishlist, Integer prodId);
-    
 }

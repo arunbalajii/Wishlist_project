@@ -8,7 +8,7 @@ import org.springframework.util.StringUtils;
 @Component
 public class CartRequestToCart implements Converter<WishlistRequest, Wishlist> {
 
-	
+
 	@Override
 	public Wishlist convert(WishlistRequest wishlistRequest) {
 		Wishlist wishlist = new Wishlist();
@@ -16,17 +16,14 @@ public class CartRequestToCart implements Converter<WishlistRequest, Wishlist> {
 		if (!StringUtils.isEmpty(wishlistRequest.getEmail())) {
 
 			wishlist.setCartId(wishlistRequest.getId());
-			wishlist.setUserId(wishlistRequest.getEmail());
-//			cart.setPromoCode(cartRequest.getPromoCode());
-//			cart.setDate(cartRequest.getDate());
-//			cart.setAmount(cartRequest.getAmount());
+			wishlist.setEmail(wishlistRequest.getEmail());
 			wishlist.setProduct(wishlistRequest.getProducts());
 		}
 
 		return wishlist;
 	}
 
-	
-	
+
+
 
 }

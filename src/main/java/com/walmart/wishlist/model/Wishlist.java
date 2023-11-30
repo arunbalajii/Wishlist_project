@@ -8,7 +8,6 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -20,11 +19,8 @@ public class Wishlist {
 	@Id
 	private ObjectId _id;
 	private Integer cartId;
-	private String email;
-	private @NonNull String userId;
-	private Date date;
-	private String promoCode;
-	private Double amount;
+	private String userId;
+	private @NonNull String email;
 
 	//@DBRef
 	private @NonNull List<Products> products;
@@ -37,45 +33,9 @@ public class Wishlist {
 		this.cartId = cartId;
 	}
 
-//	public Integer getUserId() {
-//		return userId;
-//	}
-
 
 	public String getUserId() {
 		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-//	public void setUserId(String userId) {
-//		this.userId = userId;
-//	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public String getPromoCode() {
-		return promoCode;
-	}
-
-	public void setPromoCode(String promoCode) {
-		this.promoCode = promoCode;
-	}
-
-	public Double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
 	}
 
 	public List<Products> getProducts() {
@@ -83,8 +43,8 @@ public class Wishlist {
 	}
 
 	public void setProduct(List<Products> products) {
-		
-		
+
+
 		this.products = products;
 	}
 
