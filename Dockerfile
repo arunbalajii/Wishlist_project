@@ -5,5 +5,5 @@ ARG PASSWORD
 ENV MONGODB_USERNAME=${USERNAME}
 ENV MONGODB_PASSWORD=${PASSWORD}
 #EXPOSE 8081
-COPY target/wishlist-0.0.1-SNAPSHOT.jar Login.jar
-ENTRYPOINT ["java","-jar","Login.jar"]
+COPY target/wishlist-0.0.1-SNAPSHOT.jar wishlist.jar
+ENTRYPOINT ["java","-jar","wishlist.jar"]
