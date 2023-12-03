@@ -1,11 +1,8 @@
 package com.walmart.wishlist.controller;
 
 
-import com.walmart.wishlist.dto.WishlistFetchRequest;
+import com.walmart.wishlist.dto.*;
 import com.walmart.wishlist.model.Products;
-import com.walmart.wishlist.dto.WishlistRequest;
-import com.walmart.wishlist.dto.WishlistResponse;
-import com.walmart.wishlist.dto.ProductResponse;
 import com.walmart.wishlist.model.Wishlist;
 import com.walmart.wishlist.service.*;
 import org.slf4j.Logger;
@@ -69,6 +66,19 @@ public class WishlistController {
 		}
 	}
 
+	@DeleteMapping("/remove")
+	public ResponseEntity removeItem(@RequestBody DeleteRequest deleteRequest) {
+		try {
+			logger.info("Removing Item");
+			Wishlist wishlist =wishlistService.removeItemfromWishlist(deleteRequest.getEmail(), deleteRequest.getId());
+			WishlistResponse cartResponse=buildFetchCartResponse(wishlist);
+			return new ResponseEntity<>(cartResponse, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error("Error while deleting "+e.getMessage());
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	public WishlistResponse buildFetchCartResponse(Wishlist wishlist) {
 
 		WishlistResponse wishlistResponse = new WishlistResponse();
@@ -86,8 +96,8 @@ public class WishlistController {
 		wishlistResponse.setProducts(responseProd);
 
 		return wishlistResponse;
-
-
 	}
+
+
 
 }

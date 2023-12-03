@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 @Service
@@ -103,5 +103,27 @@ public class WishlistServiceImpl extends Exception   implements WishlistService 
 
 	}
 
+	public Wishlist removeItemfromWishlist(String email,Integer prodId) throws ProductException{
+		logger.error("Inside removeItemFromCart ");
+		Wishlist c = null;
+		boolean isItemPresent =false;
+		try {
+			c =wishlistRepository.findByEmail(email);
+		}catch(Exception e) {
+			logger.error("Exception during update "+e);
+		}
+
+		if(c!=null && c.get_id()!=null) { // Update Cart
+			List<Products> dbProductList = c.getProducts();
+
+			List<Products> updatedList = dbProductList.stream()
+					.filter(dbProduct -> !dbProduct.getId().equals(prodId))
+					.collect(Collectors.toList());
+			c.setProduct(updatedList);
+		}
+
+		return wishlistRepository.save(c);
+
+	}
 
 }

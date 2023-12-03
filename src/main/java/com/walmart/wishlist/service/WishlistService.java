@@ -12,4 +12,6 @@ public interface WishlistService {
 
     Wishlist findByEmail(String email) throws ProductException;
 
+    Wishlist removeItemfromWishlist(String email,Integer prodId) throws ProductException;
+
 }
