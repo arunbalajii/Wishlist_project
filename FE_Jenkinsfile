@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    tools{
+        maven "M2_HOME"
+    }
+     environment {
+            DUSER = credentials('dockerhub_username')
+            DPWD = credentials('dockerhub_pwd')
+     }
+    stages{
+        stage('1. GIT Clone'){
+            steps{
+                git 'https://github.com/arunbalajii/FrontEnd_Capstone.git'
+            }
+        }
+        stage('2. Build Docker Image'){
+            steps{
+                script{
+                    bat 'docker build -t arunvig/jenkins_frontend .'
+                    }
+            }
+        }
+        stage('4. Push to Docker Hub'){
+            steps{
+                script{
+                   bat 'docker login -u %duser% -p %dpwd%'
+                }
+                bat 'docker push arunvig/jenkins_frontend:latest'
+            }
+        }
+    }
+}
