@@ -17,6 +17,8 @@ public class WishlistRequest extends BaseRequest {
     private List<Products> products;
 
 
+
+
 	public String getEmail() {
 		return email;
 	}

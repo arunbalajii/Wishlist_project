@@ -4,6 +4,8 @@ public class ProductResponse {
 	
 	private Integer id;
 	private Integer quantity;
+
+	private String image;
 	public Integer getId() {
 		return id;
 	}
@@ -15,5 +17,13 @@ public class ProductResponse {
 	}
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 }

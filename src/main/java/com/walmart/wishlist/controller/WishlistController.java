@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/wishlist")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*" ,allowCredentials = "")
 public class WishlistController {
 
 	private static final Logger logger = LoggerFactory.getLogger(WishlistController.class);
@@ -38,6 +38,7 @@ public class WishlistController {
 	}
 
 
+//	@CrossOrigin(allowCredentials = "true")
 	@PostMapping(value = "/fetch/user")
 	private ResponseEntity getCartByCustomerId(@RequestBody WishlistFetchRequest wishlistFetchRequest) {
 		try {

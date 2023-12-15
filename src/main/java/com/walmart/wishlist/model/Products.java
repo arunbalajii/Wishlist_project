@@ -19,6 +19,7 @@ public class Products {
 	private ObjectId _id;
 	private Integer id;
 	private Integer quantity;
+	private String image;
 	public ObjectId get_id() {
 		return _id;
 	}
@@ -48,5 +49,11 @@ public class Products {
 		this.quantity = quantity;
 	}
 
+	public String getImage() {
+		return image;
+	}
 
+	public void setImage(String image) {
+		this.image = image;
+	}
 }

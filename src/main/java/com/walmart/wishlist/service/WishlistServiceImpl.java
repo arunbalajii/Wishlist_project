@@ -70,6 +70,7 @@ public class WishlistServiceImpl extends Exception   implements WishlistService 
 				}
 				if(!isItemPresent) {
 					Products p = new Products();
+					p.setImage(reqProduct.getImage());
 					p.setId(reqProduct.getId());
 					p.setQuantity(reqProduct.getQuantity());
 					dbProductList.add(p);
@@ -100,6 +101,7 @@ public class WishlistServiceImpl extends Exception   implements WishlistService 
 		else
 
 			return wishlistRepository.findByEmail(email);
+
 
 	}
 
